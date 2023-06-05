@@ -5,74 +5,71 @@ public class Matrices {
         throw new UnsupportedOperationException("Метод не реализован");
     }
 
-    /**
-     * Вектор длины n
-     */
+    /*** Вектор длины n*/
     public static class Vector {
         private final int[] items;
 
-        /**
-         * Создает нулевой вектор длины n
-         */
+        /*** Создает нулевой вектор длины n */
         public Vector(int n) {
             this.items = new int[n];
         }
 
-        /**
-         * Создает вектор c заданными элементами.
-         */
+        /*** Создает вектор c заданными элементами. */
         public Vector(int[] items) {
             this.items = items;
         }
 
-        /**
-         * Складывает данный вектор с другим вектором.
-         *
-         * @param other вектор, который должен быть сложен с данным вектором; должен
-         *              иметь ту же длину, что и данный вектор
-         * @return новый вектор, представляющий сумму данного и другого векторов
-         */
+        /*** Складывает данный вектор с другим вектором.
+         ** @param other вектор, который должен быть сложен с данным вектором; должен иметь ту же длину, что и данный вектор
+         * @return новый вектор, представляющий сумму данного и другого векторов*/
         public Vector add(Vector other) {
-            return todo();
+            int[] sum = new int[items.length];
+            for (int i=0; i<items.length; i++) {
+                sum[i] = this.items[i] + other.items[i];
+            }
+            return new Vector(sum);
         }
 
-        /**
-         * Вычитает другой вектор из данного вектора.
-         *
-         * @param other вектор, который должен быть вычтен из данного вектора; должен
-         *              иметь ту же длину, что и данный вектор
-         * @return новый вектор, представляющий разность данного и другого векторов
-         */
+        /*** Вычитает другой вектор из данного вектора.*
+         * @param other вектор, который должен быть вычтен из данного вектора; должен иметь ту же длину, что и данный вектор
+         * @return новый вектор, представляющий разность данного и другого векторов*/
         public Vector subtract(Vector other) {
-            return todo();
+            int[] sub = new int[items.length];
+            for (int i=0; i<items.length; i++) {
+                sub[i] = this.items[i] - other.items[i];
+            }
+            return new Vector(sub);
         }
 
-        /**
-         * Вычисляет скалярное произведение данного вектора с другим вектором.
-         *
-         * @param other вектор, с которым должно быть вычислено скалярное произведение;
-         *              должен иметь ту же длину, что и данный вектор
-         * @return скалярное произведение данного и другого векторов
-         */
+        /*** Вычисляет скалярное произведение данного вектора с другим вектором.*
+         * @param other вектор, с которым должно быть вычислено скалярное произведение; должен иметь ту же длину, что и данный вектор
+         * @return скалярное произведение данного и другого векторов */
         public int dotProduct(Vector other) {
-            return todo();
+            int scal = 0;
+            for (int i=0; i<items.length; i++) {
+                scal += this.items[i] * other.items[i];
+            }
+            return scal;
         }
 
-        /**
-         * Умножает данный вектор на скаляр.
-         *
-         * @param scalar скалярное значение, на которое должен быть умножен данный вектор
-         * @return новый вектор, представляющий результат умножения данного вектора на скаляр
-         */
+        /*** Умножает данный вектор на скаляр.*
+         * * @param scalar скалярное значение, на которое должен быть умножен данный вектор
+         * @return новый вектор, представляющий результат умножения данного вектора на скаляр*/
         public Vector scalarMultiply(int scalar) {
-            return todo();
+            int[] mult = new int[items.length];
+            for (int i=0; i<items.length; i++) {
+                mult[i] = this.items[i] * scalar;
+            }
+            return new Vector(mult);
         }
 
-        /**
-         * Вычисляет длину (норму) данного вектора.
-         */
+        /*** Вычисляет длину (норму) данного вектора.*/
         public double length() {
-            return todo();
+            double len = 0;
+            for (int i=0; i<items.length; i++) {
+                len += Math.sqrt(this.items[i]);
+            }
+            return len;
         }
 
         @Override
@@ -81,26 +78,20 @@ public class Matrices {
         }
     }
 
-    /**
-     * Представляет матрицу (m x n)
-     */
+    /*** Представляет матрицу (m x n)*/
     public static class Matrix {
         private final int nRows;
         private final int nCols;
         private final int[][] rows;
 
-        /**
-         * Создает матрицу (nRows x nCols)
-         */
+        /*** Создает матрицу (nRows x nCols)*/
         public Matrix(int nRows, int nCols) {
             this.nRows = nRows;
             this.nCols = nCols;
             this.rows = new int[nRows][nCols];
         }
 
-        /**
-         * Выводит матрицу в консоль построчно с правым выравниванием чисел по столбцам.
-         */
+        /*** Выводит матрицу в консоль построчно с правым выравниванием чисел по столбцам.*/
         @Override
         public String toString() {
             int[] colWidths = new int[nCols];
@@ -129,74 +120,93 @@ public class Matrices {
             return sb.toString();
         }
 
-        /**
-         * Складывает текущую матрицу с другой матрицей.
-         *
-         * @param other другая матрица, должна иметь такую же размерность, как и
-         *              текущая матрица
-         * @return новая матрица, являющаяся результатом сложения
-         */
+        /*** Складывает текущую матрицу с другой матрицей.
+         ** @param other другая матрица, должна иметь такую же размерность, как и текущая матрица
+         * @return новая матрица, являющаяся результатом сложения*/
         public Matrix add(Matrix other) {
-            return todo();
+            int numRows = nRows;
+            int numCols = nCols;
+            Matrix result = new Matrix(numRows, numCols);
+            for (int i = 0; i < numRows; i++) {
+                for (int j = 0; j < numCols; j++) {
+                    result.rows[i][j] = this.rows[i][j] + other.rows[i][j];
+                }
+            }
+            return result;
+
         }
 
-        /**
-         * Вычитает другую матрицу из текущей матрицы.
-         *
-         * @param other другая матрица, должна иметь такую же размерность, как и
-         *              текущая матрица
-         * @return новая матрица, являющаяся результатом вычитания
-         */
+        /*** Вычитает другую матрицу из текущей матрицы.*
+         * @param other другая матрица, должна иметь такую же размерность, как и текущая матрица
+         * @return новая матрица, являющаяся результатом вычитания*/
         public Matrix subtract(Matrix other) {
-            return todo();
+            int numRows = nRows;
+            int numCols = nCols;
+            Matrix result = new Matrix(numRows, numCols);
+            for (int i = 0; i < numRows; i++) {
+                for (int j = 0; j < numCols; j++) {
+                    result.rows[i][j] = this.rows[i][j] - other.rows[i][j];
+                }
+            }
+            return result;
         }
 
-        /**
-         * Умножает текущую матрицу на другую матрицу.
-         *
-         * @param other другая матрица, количество строк которой должно быть равно
-         *              количеству столбцов текущей матрицы
-         * @return новая матрица, являющаяся результатом умножения
-         */
+        /*** Умножает текущую матрицу на другую матрицу.*
+         * @param other другая матрица, количество строк которой должно быть равно количеству столбцов текущей матрицы
+         * @return новая матрица, являющаяся результатом умножения*/
         public Matrix multiply(Matrix other) {
-            return todo();
+            int numRows = nRows;
+            int numCols = nCols;
+            Matrix result = new Matrix(numRows, numCols);
+            for (int i = 0; i < numRows; i++) {
+                for (int j = 0; j < numCols; j++) {
+                    result.rows[i][j] = this.rows[i][j] * other.rows[i][j];
+                }
+            }
+            return result;
         }
 
-        /**
-         * Умножает текущую матрицу на скаляр.
-         *
+        /*** Умножает текущую матрицу на скаляр.*
          * @param scalar скалярное значение для умножения матрицы
-         * @return новая матрица, являющаяся результатом умножения на скаляр
-         */
+         * @return новая матрица, являющаяся результатом умножения на скаляр*/
         public Matrix scalarMultiply(int scalar) {
-            return todo();
+            int numRows = nRows;
+            int numCols = nCols;
+            Matrix result = new Matrix(numRows, numCols);
+            for (int i = 0; i < numRows; i++) {
+                for (int j = 0; j < numCols; j++) {
+                    result.rows[i][j] = this.rows[i][j] * scalar;
+                }
+            }
+            return result;
         }
 
-        /**
-         * Транспонирует текущую матрицу.
-         *
-         * @return новая матрица, являющаяся транспонированной версией текущей матрицы
-         */
+        /*** Транспонирует текущую матрицу.*
+         * @return новая матрица, являющаяся транспонированной версией текущей матрицы*/
         public Matrix transpose() {
-            return todo();
+            int numRows = nRows;
+            int numCols = nCols;
+            Matrix result = new Matrix(numRows, numCols);
+            for (int i = 0; i < numRows; i++) {
+                for (int j = 0; j < numCols; j++) {
+                    result.rows[i][j] = this.rows[j][i];
+                }
+            }
+            return result;
         }
 
-        /**
-         * Вычисляет определитель текущей матрицы.
-         *
-         * @return значение определителя матрицы
-         */
+
+        /*** Вычисляет определитель текущей матрицы.*
+         * @return значение определителя матрицы*/
         public int determinant() {
-            return todo();
+            return determinant(rows);
+
         }
 
-        /**
-         * Рекурсивно вычисляет определитель матрицы matrix.
-         * Алгоритм использует разложение по первой строке матрицы.
-         *
+        /*** Рекурсивно вычисляет определитель матрицы matrix.
+         * Алгоритм использует разложение по первой строке матрицы.*
          * @param matrix квадратная матрица, для которой нужно вычислить определитель
-         * @return определитель матрицы matrix
-         */
+         * @return определитель матрицы matrix*/
         private static int determinant(int[][] matrix) {
             // Базовый случай для матрицы 1x1
             if (matrix.length == 1) {
@@ -205,7 +215,8 @@ public class Matrices {
 
             // Базовый случай для матрицы 2x2
             if (matrix.length == 2) {
-                return todo();
+                return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+
             }
 
             int result = 0;
@@ -213,7 +224,19 @@ public class Matrices {
             for (int i = 0; i < matrix.length; i++) {
                 // Создание матрицы для поддетерминанта
                 int[][] smallerMatrix = new int[matrix.length - 1][matrix.length - 1];
-                todo(); // Заполнение smallerMatrix нужными значениями из matrix
+                int row = 0;
+                int col = 0;
+                for (int j = 1; j < matrix.length; j++) {
+                    for (int k = 0; k < matrix.length; k++) {
+                        if (k == i) {
+                            continue;
+                        }
+                        smallerMatrix[row][col] = matrix[j][k];
+                        col++;
+                    }
+                    col = 0;
+                    row++;
+                }
 
                 // Вычисление поддетерминанта рекурсивным вызовом
                 int subDeterminant = determinant(smallerMatrix);
