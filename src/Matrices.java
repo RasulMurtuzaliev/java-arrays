@@ -23,11 +23,14 @@ public class Matrices {
          ** @param other вектор, который должен быть сложен с данным вектором; должен иметь ту же длину, что и данный вектор
          * @return новый вектор, представляющий сумму данного и другого векторов*/
         public Vector add(Vector other) {
-            int[] sum = new int[items.length];
-            for (int i=0; i<items.length; i++) {
-                sum[i] = this.items[i] + other.items[i];
+            if (this.items.length != other.items.length) {  //проверка на равенство длин векторов
+                throw new IllegalArgumentException("Vectors of different lengths");
             }
-            return new Vector(sum);
+            int[] sum = new int[this.items.length];  //массив для подсчета суммы элементов массивов(векторов) А и В
+            for (int i=0; i<this.items.length; i++) {   //итерация по длине массива
+                sum[i] = this.items[i] + other.items[i];    //суммируем элементы двух массивов(векторов)
+            }
+            return new Vector(sum); //создаем новый вектор и через конструктор присваиваем ему значение сумм эл. А и В
         }
 
         /*** Вычитает другой вектор из данного вектора.*
