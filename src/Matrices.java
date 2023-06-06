@@ -27,7 +27,7 @@ public class Matrices {
                 throw new IllegalArgumentException("Vectors of different lengths");
             }
             int[] sum = new int[this.items.length];  //массив для подсчета суммы элементов массивов(векторов) А и В
-            for (int i=0; i<this.items.length; i++) {   //итерация по длине массива
+            for (int i = 0; i < this.items.length; i++) {   //итерация по длине массива
                 sum[i] = this.items[i] + other.items[i];    //суммируем элементы двух массивов(векторов)
             }
             return new Vector(sum); //создаем новый вектор и через конструктор присваиваем ему значение сумм эл. А и В
@@ -37,8 +37,11 @@ public class Matrices {
          * @param other вектор, который должен быть вычтен из данного вектора; должен иметь ту же длину, что и данный вектор
          * @return новый вектор, представляющий разность данного и другого векторов*/
         public Vector subtract(Vector other) {
-            int[] sub = new int[items.length];
-            for (int i=0; i<items.length; i++) {
+            if (this.items.length != other.items.length) {  //проверка на равенство длин векторов
+                throw new IllegalArgumentException("Vectors of different lengths");
+            }
+            int[] sub = new int[this.items.length];
+            for (int i = 0; i < this.items.length; i++) {
                 sub[i] = this.items[i] - other.items[i];
             }
             return new Vector(sub);
@@ -48,8 +51,11 @@ public class Matrices {
          * @param other вектор, с которым должно быть вычислено скалярное произведение; должен иметь ту же длину, что и данный вектор
          * @return скалярное произведение данного и другого векторов */
         public int dotProduct(Vector other) {
+            if (this.items.length != other.items.length) {  //проверка на равенство длин векторов
+                throw new IllegalArgumentException("Vectors of different lengths");
+            }
             int scal = 0;
-            for (int i=0; i<items.length; i++) {
+            for (int i = 0; i < this.items.length; i++) {
                 scal += this.items[i] * other.items[i];
             }
             return scal;
@@ -59,8 +65,8 @@ public class Matrices {
          * * @param scalar скалярное значение, на которое должен быть умножен данный вектор
          * @return новый вектор, представляющий результат умножения данного вектора на скаляр*/
         public Vector scalarMultiply(int scalar) {
-            int[] mult = new int[items.length];
-            for (int i=0; i<items.length; i++) {
+            int[] mult = new int[this.items.length];
+            for (int i = 0; i < this.items.length; i++) {
                 mult[i] = this.items[i] * scalar;
             }
             return new Vector(mult);
@@ -69,7 +75,7 @@ public class Matrices {
         /*** Вычисляет длину (норму) данного вектора.*/
         public double length() {
             double len = 0;
-            for (int i=0; i<items.length; i++) {
+            for (int i = 0; i < this.items.length; i++) {
                 len += Math.sqrt(this.items[i]);
             }
             return len;
@@ -77,7 +83,7 @@ public class Matrices {
 
         @Override
         public String toString() {
-            return Arrays.toString(items);
+            return Arrays.toString(this.items);
         }
     }
 
@@ -127,8 +133,10 @@ public class Matrices {
          ** @param other другая матрица, должна иметь такую же размерность, как и текущая матрица
          * @return новая матрица, являющаяся результатом сложения*/
         public Matrix add(Matrix other) {
-            int numRows = nRows;
-            int numCols = nCols;
+            if (this.nRows != other.nRows || this.nCols != other.nCols)
+                throw new IllegalArgumentException("Matrices of different lengths");
+            int numRows = this.nRows;
+            int numCols = this.nCols;
             Matrix result = new Matrix(numRows, numCols);
             for (int i = 0; i < numRows; i++) {
                 for (int j = 0; j < numCols; j++) {
@@ -136,15 +144,16 @@ public class Matrices {
                 }
             }
             return result;
-
         }
 
         /*** Вычитает другую матрицу из текущей матрицы.*
          * @param other другая матрица, должна иметь такую же размерность, как и текущая матрица
          * @return новая матрица, являющаяся результатом вычитания*/
         public Matrix subtract(Matrix other) {
-            int numRows = nRows;
-            int numCols = nCols;
+            if (this.nRows != other.nRows || this.nCols != other.nCols)
+                throw new IllegalArgumentException("Matrices of different lengths");
+            int numRows = this.nRows;
+            int numCols = this.nCols;
             Matrix result = new Matrix(numRows, numCols);
             for (int i = 0; i < numRows; i++) {
                 for (int j = 0; j < numCols; j++) {
@@ -158,8 +167,10 @@ public class Matrices {
          * @param other другая матрица, количество строк которой должно быть равно количеству столбцов текущей матрицы
          * @return новая матрица, являющаяся результатом умножения*/
         public Matrix multiply(Matrix other) {
-            int numRows = nRows;
-            int numCols = nCols;
+            if (this.rows[0].length != other.rows.length)
+                throw new IllegalArgumentException("The number of rows is not equal to the number of columns");
+            int numRows = this.nRows;
+            int numCols = this.nCols;
             Matrix result = new Matrix(numRows, numCols);
             for (int i = 0; i < numRows; i++) {
                 for (int j = 0; j < numCols; j++) {
@@ -173,8 +184,8 @@ public class Matrices {
          * @param scalar скалярное значение для умножения матрицы
          * @return новая матрица, являющаяся результатом умножения на скаляр*/
         public Matrix scalarMultiply(int scalar) {
-            int numRows = nRows;
-            int numCols = nCols;
+            int numRows = this.nRows;
+            int numCols = this.nCols;
             Matrix result = new Matrix(numRows, numCols);
             for (int i = 0; i < numRows; i++) {
                 for (int j = 0; j < numCols; j++) {
@@ -202,7 +213,7 @@ public class Matrices {
         /*** Вычисляет определитель текущей матрицы.*
          * @return значение определителя матрицы*/
         public int determinant() {
-            return determinant(rows);
+            return determinant(this.rows);
 
         }
 
@@ -215,11 +226,9 @@ public class Matrices {
             if (matrix.length == 1) {
                 return matrix[0][0];
             }
-
             // Базовый случай для матрицы 2x2
             if (matrix.length == 2) {
                 return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
-
             }
 
             int result = 0;
@@ -243,16 +252,13 @@ public class Matrices {
 
                 // Вычисление поддетерминанта рекурсивным вызовом
                 int subDeterminant = determinant(smallerMatrix);
-
                 // Определение знака для элемента i разложения
                 int sign = (i % 2 == 0) ? 1 : -1;
-
                 // Обновление результата с учетом элемента i разложения, его знака и поддетерминанта
                 result += sign * matrix[0][i] * subDeterminant;
             }
             return result;
         }
-
     }
 
     public static void main(String[] args) {
