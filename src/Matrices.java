@@ -76,9 +76,9 @@ public class Matrices {
         public double length() {
             double len = 0;
             for (int i = 0; i < this.items.length; i++) {
-                len += Math.sqrt(this.items[i]);
+                len += this.items[i]*this.items[i];
             }
-            return len;
+            return Math.sqrt(len);
         }
 
         @Override
